@@ -13,21 +13,12 @@
         android:id="@+id/circleFillView"
         android:layout_width="300dp"
         android:layout_height="300dp"
-        android:background="#ffffff"
         android:layout_gravity="center"
         custom:fillColor="#6bcae2"
         custom:strokeColor="#75b0d0"
         custom:strokeWidth="20"
-        custom:value="0"
+        custom:value="10"
         />
-
-
-    <ImageView
-        android:id="@+id/imageView1"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_gravity="center"
-        android:background="@drawable/clip_source" />
 
 
 

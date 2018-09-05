@@ -10,6 +10,10 @@ import android.content.res.TypedArray
 import android.graphics.*
 import android.util.AttributeSet
 import android.view.View
+import android.graphics.BitmapFactory
+import android.graphics.Bitmap
+
+
 
 
 /**
@@ -35,8 +39,14 @@ class CircleFillView @JvmOverloads constructor(
     private var strokeColor: Int = 0
     private var strokeWidth: Float = 0.toFloat()
     var fillHeight: Int = 0
+    lateinit var p: Paint
+
+    // Gas pump image
+    val gasPumpBitmap: Bitmap
 
     init {
+
+        gasPumpBitmap = BitmapFactory.decodeResource(resources, R.drawable.gasoline_pump)
 
         val a = context.theme.obtainStyledAttributes(
                 attrs,
@@ -61,36 +71,6 @@ class CircleFillView @JvmOverloads constructor(
     }
 
 
-
-    fun setFillColor(fillColor: Int) {
-        this.fillColor = fillColor
-        fillPaint.setColor(fillColor)
-        invalidate()
-    }
-
-    fun getFillColor(): Int {
-        return fillColor
-    }
-
-    fun setStrokeColor(strokeColor: Int) {
-        this.strokeColor = strokeColor
-        strokePaint.setColor(strokeColor)
-        invalidate()
-    }
-
-    fun getStrokeColor(): Int {
-        return strokeColor
-    }
-
-    fun setStrokeWidth(strokeWidth: Float) {
-        this.strokeWidth = strokeWidth
-        strokePaint.setStrokeWidth(strokeWidth)
-        invalidate()
-    }
-
-    fun getStrokeWidth(): Float {
-        return strokeWidth
-    }
 
     fun setValue(value: Int) {
         adjustValue(value)
@@ -118,6 +98,11 @@ class CircleFillView @JvmOverloads constructor(
         setPaths()
     }
 
+    fun getWaterLevel (fillHeight: Int) : Float {
+        val y = center.y + radius - (2 * radius * fillHeight / 100 - 1)
+        return y
+    }
+
     private fun setPaths() {
         val y = center.y + radius - (2 * radius * fillHeight / 100 - 1)
         val x = center.x - Math.sqrt(Math.pow(radius.toDouble(), 2.0) - Math.pow((y - center.y).toDouble(), 2.0)).toFloat()
@@ -136,5 +121,17 @@ class CircleFillView @JvmOverloads constructor(
 
         canvas.drawPath(segment, fillPaint)
         canvas.drawCircle(center.x, center.y, radius, strokePaint)
+        p = Paint()
+
+        p.setColor(Color.RED)
+        canvas.drawBitmap(gasPumpBitmap, center.x - (gasPumpBitmap.width/2), center.y - (gasPumpBitmap.height/2), p)
+    }
+
+    fun getPumpBitmapBottom() : Float {
+        return center.y + (gasPumpBitmap.height/2)
+    }
+
+    fun getPumpBitmapTop() : Float {
+        return center.y - (gasPumpBitmap.height/2)
     }
 }
