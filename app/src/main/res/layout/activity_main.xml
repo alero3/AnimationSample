@@ -20,6 +20,14 @@
         custom:value="10"
         />
 
+        <ImageView
+            android:id="@+id/pump_iv"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/clip_source"
+            android:layout_gravity="center"
+            />
+
 
 
 

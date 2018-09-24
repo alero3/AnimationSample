@@ -46,7 +46,7 @@ class CircleFillView @JvmOverloads constructor(
 
     init {
 
-        gasPumpBitmap = BitmapFactory.decodeResource(resources, R.drawable.gasoline_pump)
+        gasPumpBitmap = BitmapFactory.decodeResource(resources, R.drawable.gas_pump_black)
 
         val a = context.theme.obtainStyledAttributes(
                 attrs,
@@ -123,8 +123,7 @@ class CircleFillView @JvmOverloads constructor(
         canvas.drawCircle(center.x, center.y, radius, strokePaint)
         p = Paint()
 
-        p.setColor(Color.RED)
-        canvas.drawBitmap(gasPumpBitmap, center.x - (gasPumpBitmap.width/2), center.y - (gasPumpBitmap.height/2), p)
+        //canvas.drawBitmap(gasPumpBitmap, center.x - (gasPumpBitmap.width/2), center.y - (gasPumpBitmap.height/2), p)
     }
 
     fun getPumpBitmapBottom() : Float {

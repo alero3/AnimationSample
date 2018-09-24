@@ -8,6 +8,10 @@ import android.graphics.drawable.ClipDrawable
 import android.os.Handler
 import android.animation.Animator
 import android.util.Log
+import android.widget.ImageView
+import android.view.Gravity
+
+
 
 
 class MainActivity : AppCompatActivity() {
@@ -25,30 +29,14 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         circleFill = findViewById<View>(R.id.circleFillView) as CircleFillView
-        /*
-        val imageView: ImageView = findViewById(R.id.imageView1)
-        mImageDrawable = imageView.background as ClipDrawable
+
+
+
+        val img = findViewById<ImageView>(R.id.pump_iv)
+        mImageDrawable = ClipDrawable(img.drawable, Gravity.BOTTOM, ClipDrawable.VERTICAL)
         mImageDrawable.level = 0
 
-        imageView.getViewTreeObserver().addOnGlobalLayoutListener(object : OnGlobalLayoutListener {
 
-            override fun onGlobalLayout() {
-                val height = imageView.height
-                val width = imageView.width
-                val xTop = imageView.left
-                val xBottom = imageView.right
-                val yTop = imageView.top
-                val yBottom = imageView.bottom
-
-                val imageViewYBottom = imageView.width / 2
-
-
-                // don't forget to remove the listener to prevent being called again
-                // by future layout events:
-                imageView.getViewTreeObserver().removeOnGlobalLayoutListener(this)
-            }
-        })
-        */
 
 
 
@@ -80,6 +68,10 @@ class MainActivity : AppCompatActivity() {
             }
 
             //TODO Update image color
+            //val newlevel = mImageDrawable.level + 5000
+            //mImageDrawable.level = newlevel
+            //mImageDrawable.invalidateSelf()
+
 
             // Update water level
             circleFill.setValue(animatedValue)
@@ -152,19 +144,33 @@ class MainActivity : AppCompatActivity() {
             override fun onAnimationEnd(animation: Animator) {
 
                 Log.d (TAG, "Third animation finished")
-                //secondAnimator.start()
-
 
 
             }
 
         })
 
+        fun doTheAnimation() {
+            mLevel += 1000
+            mImageDrawable.level = mLevel
+            Log.d("MainActivity", "level: " + mLevel)
+            if (mLevel <= 10000) {
+                mHandler.postDelayed(animateImage, 500)
+            } else {
+                mHandler.removeCallbacks(animateImage)
+            }
+        }
+
+        animateImage = Runnable { doTheAnimation() }
+
         fillCircleAnimator.duration = 2000
         secondAnimator.duration = 2000
         thirdAnimator.duration = 2000
         //fillCircleAnimator.repeatCount = ValueAnimator.INFINITE
         fillCircleAnimator.start()
+
+        mHandler.post(animateImage)
+        animateImage.run()
     }
 
 
